@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureComm — Hybrid Encryption Platform</title>
+
+  <!-- Google Fonts (External CDN) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════ -->
+<nav>
+  <div class="nbrand">
+    <div class="nicon">🔐</div>
+    SecureComm
+  </div>
+  <ul class="nlinks">
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#why">Why SecureComm</a></li>
+  </ul>
+  <div class="nstatus">
+    <div class="ndot"></div>
+    System Secure
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════ -->
+<section class="hero">
+  <div class="hg1"></div>
+  <div class="hg2"></div>
+
+  <div class="hchip">🛡 Military-Grade Hybrid Encryption</div>
+
+  <h1>Communicate<br><span class="accent">Without Fear</span></h1>
+
+  <p class="hsub">
+    AES-256-GCM message encryption.<br>
+    RSA-2048 key protection. Zero plaintext ever transmitted.
+  </p>
+
+  <div class="hbtns">
+    <a href="#demo" class="btnp">🔬 Live Demo</a>
+    <a href="#why"  class="btno">Why SecureComm?</a>
+  </div>
+
+  <!-- Encryption pipeline visualization -->
+  <div class="pipe">
+    <div class="pnode">
+      <div class="pbox lit"><div class="pshim"></div>📝 Plaintext</div>
+      <div class="plbl">Input</div>
+    </div>
+    <div class="parr"></div>
+    <div class="pnode">
+      <div class="pbox lit"><div class="pshim" style="animation-delay:-1s"></div>🔒 AES-256</div>
+      <div class="plbl">Encrypt</div>
+    </div>
+    <div class="parr"></div>
+    <div class="pnode">
+      <div class="pbox lit"><div class="pshim" style="animation-delay:-2s"></div>🔑 RSA-2048</div>
+      <div class="plbl">Key Wrap</div>
+    </div>
+    <div class="parr"></div>
+    <div class="pnode">
+      <div class="pbox lit"><div class="pshim" style="animation-delay:-3s"></div>📡 Transmit</div>
+      <div class="plbl">Secure TX</div>
+    </div>
+    <div class="parr"></div>
+    <div class="pnode">
+      <div class="pbox done">✅ Decrypted</div>
+      <div class="plbl">Output</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     DEMO SECTION
+═══════════════════════════════════ -->
+<div id="demo" class="sec">
+  <div class="shdr">
+    <span class="snum">// 01</span>
+    <h2 class="stitle">Live Encryption Demo</h2>
+    <div class="sline"></div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="sbar">
+    <div class="sc cc"><div class="semi">🔒</div><div><span class="sv vc" id="sE">0</span><span class="slbl">Messages Encrypted</span></div></div>
+    <div class="sc cg"><div class="semi">🔓</div><div><span class="sv vg" id="sD">0</span><span class="slbl">Messages Decrypted</span></div></div>
+    <div class="sc cp"><div class="semi">🗝</div><div><span class="sv vp" id="sK">0</span><span class="slbl">Keys Generated</span></div></div>
+    <div class="sc ca"><div class="semi">📡</div><div><span class="sv va" id="sT">0</span><span class="slbl">Transmissions</span></div></div>
+  </div>
+
+  <!-- Session History Panel -->
+  <div class="hpanel">
+    <div class="hhdr">
+      <div class="htitle">📋 Session Message History</div>
+      <button class="hclr" onclick="clrHist()">[ clear ]</button>
+    </div>
+    <div class="hbody" id="histB">
+      <div class="hempty" id="histE">No messages yet — run the demo to see history</div>
+      <div class="hrow hhead" id="histH" style="display:none">
+        <span>#</span>
+        <span>Time</span>
+        <span>Operation</span>
+        <span>Recipient / Preview</span>
+        <span>Size</span>
+        <span>Status</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step Tabs -->
+  <div class="tabs">
+    <button class="tab on" id="t0" onclick="goTab(0)">🔑 Step 01 — Key Generation</button>
+    <button class="tab"    id="t1" onclick="goTab(1)">🔒 Step 02 — Encrypt &amp; Send</button>
+    <button class="tab"    id="t2" onclick="goTab(2)">🔓 Step 03 — Decrypt Message</button>
+  </div>
+
+  <!-- ── PANEL 0: KEY GENERATION ── -->
+  <div class="panel on" id="p0">
+    <div class="g2">
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">⚙️ RSA-2048 Key Pair Generator</div>
+        <p style="font-family:var(--fm);font-size:.9rem;color:var(--textd);line-height:1.8;margin-bottom:18px;">
+          Generate a fresh <span style="color:#7dd3fc">RSA-2048</span> key pair using the WebCrypto API.
+          Your <span style="color:#f0abfc">Private Key</span> stays local — never transmitted.
+          <br><br>
+          <span style="color:var(--green)">♻ You can re-generate keys and encrypt new messages any number of times.</span>
+        </p>
+        <div style="margin-bottom:18px">
+          <span class="tag tc">RSA-OAEP</span>
+          <span class="tag tc">SHA-256</span>
+          <span class="tag tc">2048-bit</span>
+          <span class="tag tg">WebCrypto API</span>
+        </div>
+        <button class="abtn bc" onclick="genKeys()" id="genBtn">🔑 Generate RSA Key Pair</button>
+        <div class="prog"><div class="progf" id="gProg" style="width:0%"></div></div>
+      </div>
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">🗝 Generated Keys</div>
+        <div class="kdsp">
+          <span class="klbl">RSA Public Key (SPKI/PEM)</span>
+          <div class="kval pub" id="kPub">— Not generated yet —</div>
+        </div>
+        <div class="kdsp">
+          <span class="klbl">RSA Private Key (PKCS#8/PEM)</span>
+          <div class="kval prv" id="kPrv">— Not generated yet —</div>
+        </div>
+        <div class="kdsp">
+          <span class="klbl">AES-256-GCM Session Key (hex)</span>
+          <div class="kval aes" id="kAes">— Generated at encryption time —</div>
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="logp sp2">
+        <div class="lhdr">
+          <div class="ltitle">⚡ Activity Log</div>
+          <button class="lclr" onclick="clrLog()">[ clear ]</button>
+        </div>
+        <div class="lbody" id="logA">
+          <div class="le">
+            <span class="lt2">--:--:--</span>
+            <span class="lm info">SecureComm initialized · WebCrypto API ready · All operations run in-browser</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PANEL 1: ENCRYPT & SEND ── -->
+  <div class="panel" id="p1">
+    <div class="g2">
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">✉️ Compose Secure Message</div>
+        <div class="fg">
+          <label>Recipient Email or Phone</label>
+          <input type="text" id="rcpt" placeholder="alice@example.com" value="alice@example.com">
+        </div>
+        <div class="fg">
+          <label>Plaintext Message</label>
+          <textarea id="msg" rows="4" placeholder="Type your secret message here...">The launch code is ALPHA-7-ZULU. Transfer $2M at 09:00 UTC.</textarea>
+        </div>
+        <div class="fg">
+          <label>Plaintext Preview (what you're encrypting)</label>
+          <div class="cb hi" id="ptPrev">The launch code is ALPHA-7-ZULU. Transfer $2M at 09:00 UTC.</div>
+        </div>
+        <button class="abtn bc" onclick="doEnc()" id="encBtn">🔒 Encrypt Message</button>
+      </div>
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">🔐 Encrypted Output</div>
+        <div class="fg"><label>AES-256-GCM Ciphertext</label>           <div class="cb enc" id="ctOut">— Awaiting encryption —</div></div>
+        <div class="fg"><label>RSA-Wrapped AES Key</label>               <div class="cb pur" id="ekOut">— Awaiting encryption —</div></div>
+        <div class="fg"><label>IV / Nonce (96-bit GCM)</label>           <div class="cb amb" id="ivOut">— Awaiting encryption —</div></div>
+        <button class="abtn bg" onclick="doSend()" id="sendBtn" disabled>📡 Send Encrypted Payload</button>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="logp sp2">
+        <div class="lhdr">
+          <div class="ltitle">⚡ Activity Log</div>
+          <button class="lclr" onclick="clrLog()">[ clear ]</button>
+        </div>
+        <div class="lbody" id="logB"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PANEL 2: DECRYPT ── -->
+  <div class="panel" id="p2">
+    <div class="g2">
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">📨 Received Encrypted Payload</div>
+        <div class="fg"><label>Ciphertext (auto-filled from Step 02)</label>    <div class="cb enc" style="max-height:90px" id="rxCT">— Complete Steps 01 and 02 first —</div></div>
+        <div class="fg"><label>RSA-Wrapped AES Key</label>                       <div class="cb pur" style="max-height:70px" id="rxEK">— Complete Steps 01 and 02 first —</div></div>
+        <div class="fg"><label>Private Key (used for decryption)</label>         <div class="cb" style="color:#f0abfc;font-size:.72rem;max-height:60px" id="rxPrv">— Generate keys in Step 01 first —</div></div>
+        <button class="abtn bp" onclick="doDec()" id="decBtn">🔓 Decrypt Message</button>
+      </div>
+
+      <div class="card">
+        <div class="ctop"></div>
+        <div class="ctitle">✅ Decryption Result</div>
+        <div class="dra" id="decRes">
+          <div class="dph">
+            <div class="di">🔒</div>
+            <p>Decrypted message will appear here.<br>Private key is required to unlock.</p>
+          </div>
+        </div>
+        <hr class="sep">
+        <div style="font-family:var(--fm);font-size:.82rem;color:var(--textd);line-height:2">
+          <div style="color:var(--cyan);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Security Guarantees</div>
+          ✔ AES key unwrapped with RSA private key<br>
+          ✔ GCM authentication tag verified<br>
+          ✔ Ciphertext integrity confirmed<br>
+          ✔ Original plaintext fully restored
+        </div>
+      </div>
+
+      <!-- Activity Log -->
+      <div class="logp sp2">
+        <div class="lhdr">
+          <div class="ltitle">⚡ Activity Log</div>
+          <button class="lclr" onclick="clrLog()">[ clear ]</button>
+        </div>
+        <div class="lbody" id="logC"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     WHY SECURECOMM SECTION
+═══════════════════════════════════ -->
+<div id="why" class="sec">
+  <div class="shdr">
+    <span class="snum">// 02</span>
+    <h2 class="stitle">Why SecureComm Wins</h2>
+    <div class="sline"></div>
+  </div>
+  <div class="wgrid">
+    <div class="wcard">
+      <div class="wtop"></div>
+      <div class="wico">🔐</div>
+      <div class="wtitle">Hybrid Encryption</div>
+      <div class="wbody">Combines the speed of AES-256 with the key-exchange strength of RSA-2048. No other approach gives you both simultaneously.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: AES-256 + RSA-2048 hybrid</div>
+        <div class="wrow b">✖ WhatsApp/Email: Provider-managed keys</div>
+      </div>
+    </div>
+    <div class="wcard">
+      <div class="wtop" style="background:linear-gradient(90deg,transparent,var(--green),transparent)"></div>
+      <div class="wico" style="background:rgba(0,255,163,.1);border-color:rgba(0,255,163,.28)">🗝</div>
+      <div class="wtitle">You Hold the Keys</div>
+      <div class="wbody">Private key is generated in-browser and never uploaded. No server or cloud can decrypt your messages without physical access to your device.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: Local-only private key</div>
+        <div class="wrow b">✖ Gmail/SMS: Server stores &amp; controls keys</div>
+      </div>
+    </div>
+    <div class="wcard">
+      <div class="wtop" style="background:linear-gradient(90deg,transparent,var(--purple),transparent)"></div>
+      <div class="wico" style="background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.28)">📦</div>
+      <div class="wtitle">Zero Plaintext on Wire</div>
+      <div class="wbody">Only the ciphertext and RSA-wrapped AES key travel over the network. Your original message never leaves the browser unencrypted.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: Ciphertext-only transmission</div>
+        <div class="wrow b">✖ Traditional: Plaintext or TLS-only transport</div>
+      </div>
+    </div>
+    <div class="wcard">
+      <div class="wtop" style="background:linear-gradient(90deg,transparent,var(--amber),transparent)"></div>
+      <div class="wico" style="background:rgba(255,184,0,.1);border-color:rgba(255,184,0,.28)">🛡</div>
+      <div class="wtitle">Tamper Detection</div>
+      <div class="wbody">AES-GCM includes a 128-bit authentication tag. Any single byte modification to the ciphertext is detected and the decryption is rejected instantly.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: GCM auth tag per message</div>
+        <div class="wrow b">✖ SMS/Email: No integrity checking</div>
+      </div>
+    </div>
+    <div class="wcard">
+      <div class="wtop"></div>
+      <div class="wico">🚫</div>
+      <div class="wtitle">No Message Storage</div>
+      <div class="wbody">The relay is completely stateless — it forwards and forgets. Nothing is persisted, making subpoena-based data retrieval impossible.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: Stateless relay, zero retention</div>
+        <div class="wrow b">✖ iMessage/Gmail: Messages stored on servers</div>
+      </div>
+    </div>
+    <div class="wcard">
+      <div class="wtop" style="background:linear-gradient(90deg,transparent,var(--green),transparent)"></div>
+      <div class="wico" style="background:rgba(0,255,163,.1);border-color:rgba(0,255,163,.28)">🔬</div>
+      <div class="wtitle">Open &amp; Verifiable</div>
+      <div class="wbody">Built on the W3C WebCrypto standard — an audited, open browser API. No black-box algorithms, no closed-source SDKs, no blind trust required.</div>
+      <div class="wvs">
+        <div class="wrow g">✔ SecureComm: W3C WebCrypto, open standard</div>
+        <div class="wrow b">✖ Many apps: Proprietary, unaudited crypto</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+═══════════════════════════════════ -->
+<footer>
+  <div class="fbrand">SecureComm</div>
+  <div class="fcopy">AES-256-GCM + RSA-2048 · WebCrypto API · Zero Plaintext Storage · Unlimited Reuse</div>
+</footer>
+
+<!-- ═══════════════════════════════════
+     MODAL — Transmission Success
+═══════════════════════════════════ -->
+<div class="mwrap" id="modal">
+  <div class="mbox">
+    <span class="mico">📡</span>
+    <div class="mttl">Message Transmitted</div>
+    <div class="mbody" id="mTxt"></div>
+    <button class="mclose" onclick="closeModal()">✓ Send Another Message</button>
+  </div>
+</div>
+
+<!-- External JavaScript (loaded at end of body) -->
+<script src="script.js"></script>
+
+</body>
+</html>
